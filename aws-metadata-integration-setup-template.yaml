@@ -16,6 +16,7 @@ Resources:
   OtterizeMetadataIntegrationRole:
     Type: 'AWS::IAM::Role'
     Properties:
+      RoleName: OtterizeMetadataCollectorRole
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
