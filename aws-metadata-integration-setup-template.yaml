@@ -4,13 +4,9 @@ Metadata:
   Source: https://github.com/otterize/setup/aws-metadata-integration-setup-template.yaml
 
 Parameters:
-  OtterizeAccountId:
-    Type: String
-    Description: The AWS account ID that can assume this role
-
   ExternalId:
     Type: String
-    Description: An external ID to provide additional security in the role assumption
+    Description: DO NOT MODIFY! - A unique ID Otterize has to provide on role assumption for additional security
 
 Resources:
   OtterizeMetadataIntegrationRole:
@@ -22,7 +18,7 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              AWS: !Sub arn:aws:iam::${OtterizeAccountId}:root
+              AWS: !Sub arn:aws:iam::353146681200:root
             Action: sts:AssumeRole
             Condition:
               StringEquals:
