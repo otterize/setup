@@ -23,6 +23,12 @@ Resources:
             Condition:
               StringEquals:
                 sts:ExternalId: !Ref ExternalId
+          - Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::353146681200:root
+            Action:
+              - sts:SetSourceIdentity
+              - sts:TagSession
       Path: "/"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/ReadOnlyAccess
