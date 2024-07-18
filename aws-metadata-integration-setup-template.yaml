@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: CloudFormation template to create a role with read-only permissions to EC2, EKS, RDS, Route53, and S3 services, and allow assumption by a specific AWS account with an external ID
+Description: Enables Otterize's AWS Visibility Integration - creates a read-only role assumable by Otterize
 Metadata:
   Source: https://github.com/otterize/setup/aws-metadata-integration-setup-template.yaml
 
