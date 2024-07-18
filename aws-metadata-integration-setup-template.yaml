@@ -31,7 +31,19 @@ Resources:
               - sts:TagSession
       Path: "/"
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/ReadOnlyAccess
+        # ViewOnlyAccess is considered much more secure than ReadOnlyAccess, as it doesn't allow reading actual data (such as S3 objects)
+        - arn:aws:iam::aws:policy/job-function/ViewOnlyAccess
+        - arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess
+      Policies:
+        - PolicyName: 'EksViewOnlyAccess'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 'eks:ListClusters'
+                  - 'eks:DescribeCluster'
+                Resource: '*'
 
 Outputs:
   RoleArn:
