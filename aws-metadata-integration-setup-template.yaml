@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Enables Otterize's AWS Visibility Integration - creates a read-only role assumable by Otterize
+Metadata:
+  Source: https://github.com/otterize/setup/aws-metadata-integration-setup-template.yaml
+
+Parameters:
+  ExternalId:
+    Type: String
+    Description: DO NOT MODIFY! - A unique ID Otterize has to provide on role assumption for additional security
+
+Resources:
+  OtterizeMetadataIntegrationRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: OtterizeMetadataCollectorRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::353146681200:root
+            Action: sts:AssumeRole
+            Condition:
+              StringEquals:
+                sts:ExternalId: !Ref ExternalId
+          - Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::353146681200:root
+            Action:
+              - sts:SetSourceIdentity
+              - sts:TagSession
+      Path: "/"
+      ManagedPolicyArns:
+        # ViewOnlyAccess is considered much more secure than ReadOnlyAccess, as it doesn't allow reading actual data (such as S3 objects)
+        - arn:aws:iam::aws:policy/job-function/ViewOnlyAccess
+        - arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess
+      Policies:
+        - PolicyName: 'EksViewOnlyAccess'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action:
+                  - 'eks:ListClusters'
+                  - 'eks:DescribeCluster'
+                Resource: '*'
+
+Outputs:
+  RoleArn:
+    Description: The ARN of the read-only role
+    Value: !GetAtt OtterizeMetadataIntegrationRole.Arn
+    Export:
+      Name: OtterizeMetadataIntegrationRoleArn
