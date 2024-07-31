@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Enables Otterize's AWS Visibility Integration - creates a read-only role assumable by Otterize
 Metadata:
-  Source: https://github.com/otterize/setup/aws-metadata-integration-setup-template.yaml
+  Source: https://github.com/otterize/setup/aws-visibility-integration-setup-template.yaml
 
 Parameters:
   ExternalId:
@@ -9,10 +9,10 @@ Parameters:
     Description: DO NOT MODIFY! - A unique ID Otterize has to provide on role assumption for additional security
 
 Resources:
-  OtterizeMetadataIntegrationRole:
+  OtterizeVisibilityIntegrationRole:
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: OtterizeMetadataCollectorRole
+      RoleName: OtterizeVisibilityCollectorRole
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -48,6 +48,6 @@ Resources:
 Outputs:
   RoleArn:
     Description: The ARN of the read-only role
-    Value: !GetAtt OtterizeMetadataIntegrationRole.Arn
+    Value: !GetAtt OtterizeVisibilityIntegrationRole.Arn
     Export:
-      Name: OtterizeMetadataIntegrationRoleArn
+      Name: OtterizeVisibilityIntegrationRoleArn
