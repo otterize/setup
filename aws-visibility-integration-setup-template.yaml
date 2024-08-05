@@ -18,14 +18,14 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              AWS: !Sub arn:aws:iam::353146681200:root
+              AWS: arn:aws:iam::353146681200:root
             Action: sts:AssumeRole
             Condition:
               StringEquals:
                 sts:ExternalId: !Ref ExternalId
           - Effect: Allow
             Principal:
-              AWS: !Sub arn:aws:iam::353146681200:root
+              AWS: arn:aws:iam::353146681200:root
             Action:
               - sts:SetSourceIdentity
               - sts:TagSession
@@ -44,6 +44,9 @@ Resources:
                   - 'eks:ListClusters'
                   - 'eks:DescribeCluster'
                 Resource: '*'
+      Tags:
+        - Key: "otterize/system"
+          Value: "true"
 
 Outputs:
   RoleArn:
